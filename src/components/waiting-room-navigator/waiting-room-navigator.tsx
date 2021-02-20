@@ -5,26 +5,24 @@ import { Component, h } from '@stencil/core';
 })
 class WaitingRoomNavigator {
 
-    private VIRTUAL_WAITING_ROOM_URL = 'http://localhost:8080/#/wait';
+    private VIRTUAL_WAITING_ROOM_URL = 'http://localhost:8800/#/wait';
 
     private APPLICATION_STRESS_CHECK_PATH = '/api/can_serve';
 
-    constructor() {
-        console.log('XXX===> Constructor', );
-        this.checkApplicationStressStatus();
-    }
-
     connectedCallback() {
-        
+      this.checkApplicationStressStatus();
     }
 
     render() {
-        return <div>You might be redirected</div>;
+        return (
+              <div>
+                <h4>This is navigator web-component. Only for demonstration purpose this is made visible.</h4>
+              </div>
+          );
     }
 
     checkApplicationStressStatus() {
         const stressCheckUrl = window.location.origin + this.APPLICATION_STRESS_CHECK_PATH;
-        console.log('stressCheckUrl : ', stressCheckUrl);
         fetch(stressCheckUrl)
         .then((response: Response) => {
           response.json().then((status: boolean) => {
