@@ -41,7 +41,7 @@ class WaitingRoomNavigator {
       const params = {
         redirectUrl : window.location.href
       };
-      return encodeURI('redirectInfo=' + JSON.stringify(params));
+      return 'redirectInfo=' + btoa(JSON.stringify(params));
     }
 
 }
