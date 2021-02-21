@@ -5,7 +5,7 @@ import { Component, h } from '@stencil/core';
 })
 class WaitingRoomNavigator {
 
-    private VIRTUAL_WAITING_ROOM_URL = 'http://localhost:8800/#/wait';
+    private VIRTUAL_WAITING_ROOM_URL = 'https://virtual-waiting-room.herokuapp.com/#/wait';
 
     private APPLICATION_STRESS_CHECK_PATH = '/api/can_serve';
 
