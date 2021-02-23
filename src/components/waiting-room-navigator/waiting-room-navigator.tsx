@@ -1,5 +1,7 @@
 import { Component, h } from '@stencil/core';
 
+type Status = 'busy' | 'unavailable';
+
 @Component({
   tag: 'waiting-room-navigator'
 })
@@ -27,19 +29,22 @@ class WaitingRoomNavigator {
         .then((response: Response) => {
           response.json().then((status: boolean) => {
             if (!status) {
-              this.goToWaitingRoom()
+              this.goToWaitingRoom('busy')
             }
           });
+        }).catch(err => {
+          this.goToWaitingRoom('unavailable');
         })
     }
 
-    goToWaitingRoom = () => {
-      window.location.replace(this.VIRTUAL_WAITING_ROOM_URL + '?' + this.getWaitingRoomParameters());
+    goToWaitingRoom = (status: Status) => {
+      window.location.replace(this.VIRTUAL_WAITING_ROOM_URL + '?' + this.getWaitingRoomParameters(status));
     }
 
-    getWaitingRoomParameters = () => {
+    getWaitingRoomParameters = (status: Status) => {
       const params = {
-        redirectUrl : window.location.href
+        redirectUrl : window.location.href,
+        appCheckStatus: status
       };
       return 'redirectInfo=' + btoa(JSON.stringify(params));
     }
