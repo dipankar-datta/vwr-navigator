@@ -24,18 +24,23 @@ class WaitingRoomNavigator {
     }
 
     checkApplicationStressStatus() {
-        const stressCheckUrl = window.location.origin + this.APPLICATION_STRESS_CHECK_PATH;
-        fetch(stressCheckUrl)
-        .then((response: Response) => {
+      const stressCheckUrl = window.location.origin + this.APPLICATION_STRESS_CHECK_PATH;
+      fetch(stressCheckUrl)
+      .then((response: Response) => {
+        if (response.ok) {
           response.json().then((status: boolean) => {
             if (!status) {
               this.goToWaitingRoom('busy')
             }
           });
-        }).catch(err => {
+        } else {
           this.goToWaitingRoom('unavailable');
-        })
-    }
+        }
+      })
+      .catch(err => {
+        this.goToWaitingRoom('unavailable');
+      });
+  }
 
     goToWaitingRoom = (status: Status) => {
       window.location.replace(this.VIRTUAL_WAITING_ROOM_URL + '?' + this.getWaitingRoomParameters(status));
